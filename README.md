@@ -1,8 +1,9 @@
-#Classification of MNIST DATA
+#Classification of MNIST-Data
 
-<!-- [Wikipedia](https://en.wikipedia.org/wiki/Iris_flower_data_set)
- -->
-## Implementing various ML/DL algorithms - PERFORMANCE ASSESSMENT
+[Kaggle-Competition](https://www.kaggle.com/c/digit-recognizer)
+Current Highscore: 97.4%
+
+## Implementing various ML/DL algorithms - Performance Assessment
 ### logistic Regression:
 * achieved Train Accuracy of 91% with reg = .3
 * accuracy largely equal for reg .1 - 20
