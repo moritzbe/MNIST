@@ -12,12 +12,14 @@ y_log = pandas.DataFrame.as_matrix(pandas.read_csv("kaggle_mnist_logreg.csv", se
 y_ran = pandas.DataFrame.as_matrix(pandas.read_csv("kaggle_mnist_randForest.csv", sep=', ', delimiter=',', header='infer', usecols = [1]).astype(int))
 y_knn = pandas.DataFrame.as_matrix(pandas.read_csv("kaggle_mnist_knn.csv", sep=', ', delimiter=',', header='infer', usecols = [1]).astype(int))
 y_nn = pandas.DataFrame.as_matrix(pandas.read_csv("kaggle_mnist_fullyConnectedNet.csv", sep=', ', delimiter=',', header='infer', usecols = [1]).astype(int))
+y_cov = pandas.DataFrame.as_matrix(pandas.read_csv("kaggle_mnist_CovNet.csv", sep=', ', delimiter=',', header='infer', usecols = [1]).astype(int))
 
 svm_accuracy = 92
 log_accuracy = 91
 ran_accuracy = 95
 knn_accuracy = 96
 nn_accuracy = 97
+cov_accuracy = 98
 
 y_weighted = np.zeros([y_svm.shape[0]])
 for i in xrange(y_svm.shape[0]):
@@ -30,10 +32,11 @@ for i in xrange(y_svm.shape[0]):
 		votes[y_ran[i], 1] += 1 * ran_accuracy
 		votes[y_knn[i], 1] += 1 * knn_accuracy
 		votes[y_nn[i], 1] += 1 * nn_accuracy
+		votes[y_cov[i], 1] += 1 * cov_accuracy
 		y_weighted[i] = np.argmax(votes[:,1]).astype(int)
 
 # Submission:
 # svm, knn, svm, rf -> 96.6%
 # svm, knn, svm, rf, nn -> 97.4%
 
-saveToCSV(y_weighted.astype(int), "weighted2")
+saveToCSV(y_weighted.astype(int), "weighted3")

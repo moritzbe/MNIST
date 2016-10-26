@@ -83,19 +83,30 @@ cv = 7
 # print "The train accuracy of Random Forest is", np.mean(cross_val_score(rf, X, y, cv=cv))
 # y_pred = rf.predict(X_test)
 
+
+
+
 # Fully Connected Net:
 # After 100 epoqs achieved accuracy of 99.98% on training, Test_accuracy is 97% - Overfit
-y = y.T 
-model = fullyConnectedNet(X, y, epochs = 100)
-# fix random seed for reproducibility
-# seed = 7
-# evaluate using 10-fold cross validation
-# kfold = StratifiedKFold(n_splits=cv, shuffle=True, random_state=seed)
-# print "The train accuracy of the Neural Net is", np.mean(cross_val_score(model, X, y, cv=kfold))
-results = model.predict(X_test)
+# y = y.T 
+# model = fullyConnectedNet(X, y, epochs = 100)
+# results = model.predict(X_test)
+# y_pred = np.zeros([results.shape[0]])
+# for i in xrange(results.shape[0]):
+# 	y_pred[i] = np.argmax(results[i,:]).astype(int)
+
+
+# First CovNet:
+# Train Accuracy = 99.6%
+# Test Accuracy = 98.8%
+X_ = X.reshape(X.shape[0], 28, 28, 1)
+X_test_ = X_test.reshape(X_test.shape[0], 28, 28, 1)
+model = covNet(X_, y, batch_size = 128, epochs = 12)
+results = model.predict(X_test_)
 y_pred = np.zeros([results.shape[0]])
 for i in xrange(results.shape[0]):
 	y_pred[i] = np.argmax(results[i,:]).astype(int)
 
+
 # Submission:
-saveToCSV(y_pred.astype(int), "fullyConnectedNet")
+saveToCSV(y_pred.astype(int), "CovNet")
