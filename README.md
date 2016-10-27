@@ -1,7 +1,7 @@
 #Classification of MNIST-Data
 
 [Kaggle-Competition](https://www.kaggle.com/c/digit-recognizer)
-Current Highscore: 97.4%
+Current Highscore: 98.8%
 
 ## Implementing various ML/DL algorithms - Performance Assessment
 ### logistic Regression:
@@ -26,3 +26,7 @@ Current Highscore: 97.4%
 * svm, knn, svm, rf -> 96.6%
 * svm, knn, svm, rf, nn -> 97.4%
 
+
+## Learnings:
+* a neural net performs better when PCA + Mean Subtraction is applied
+* Was able to achieve a dim. reduction to 30px and still get 99.3% train acc, 95% test acc, 15px - > 97%, 7px -> 88.8% train accuracy.

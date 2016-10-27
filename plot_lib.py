@@ -39,3 +39,11 @@ def testplot3d_PCA(X, X_Color, title):
 	ax.set_ylabel('green')
 	ax.set_zlabel('blue')
 	plt.show()
+
+
+def plotImage(X, entry, label = None):
+	img = X[entry,:].reshape((28, 28))
+	plt.title('Scores are {label}'.format(label=label))
+	plt.imshow(img, cmap='gray')
+	plt.show()
+	

@@ -5,10 +5,11 @@ import numpy as np
 import tensorflow as tf
 tf.python.control_flow_ops = tf
 
-def fullyConnectedNet(X,Y, epochs):
+def fullyConnectedNet(X, y, epochs):
 	neurons = 100
+	nb_features = X.shape[1]
 	model = Sequential([
-		Dense(neurons, input_dim=784, init='uniform'),
+		Dense(neurons, input_dim=nb_features, init='uniform'),
 		Activation('relu'),
 		Dense(neurons, init='uniform'),
 		Activation('relu'),

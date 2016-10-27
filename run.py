@@ -1,8 +1,12 @@
 from data_tools import *
 from algorithms import *
+from plot_lib import *
 from nets import *
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 from sklearn.feature_selection import RFE
+import numpy as np
+
+
 
 # Loading data for fast use in Python:
 # loaddata("test.csv")
@@ -10,13 +14,26 @@ from sklearn.feature_selection import RFE
 
 # Loading the data into X, y
 X = loadnumpy("X_TRAIN.npy")/255.
+X_original = loadnumpy("X_TRAIN.npy")/255.
 X_test = loadnumpy("X_TEST.npy")/255.
 y = loadnumpy("Y_TRAIN.npy")
+X -= np.mean(X)
+X_test -= np.mean(X)
+
+# plotImage(X, entry=12)
+
+# Perform PCA: 
+pca = pca(X, n=None)
+X = pca.transform(X)
+X_test = pca.transform(X_test)
 
 
 m = X.shape[0]
 m_test = X_test.shape[0]
 n = X.shape[1]
+
+
+
 
 print "The number of training samples m is", m
 print "The number of test samples m is", m_test
@@ -89,24 +106,37 @@ cv = 7
 # Fully Connected Net:
 # After 100 epoqs achieved accuracy of 99.98% on training, Test_accuracy is 97% - Overfit
 # y = y.T 
-# model = fullyConnectedNet(X, y, epochs = 100)
+# model = fullyConnectedNet(X, y, epochs = 20)
 # results = model.predict(X_test)
 # y_pred = np.zeros([results.shape[0]])
 # for i in xrange(results.shape[0]):
 # 	y_pred[i] = np.argmax(results[i,:]).astype(int)
 
 
-# First CovNet:
-# Train Accuracy = 99.6%
-# Test Accuracy = 98.8%
-X_ = X.reshape(X.shape[0], 28, 28, 1)
-X_test_ = X_test.reshape(X_test.shape[0], 28, 28, 1)
-model = covNet(X_, y, batch_size = 128, epochs = 12)
-results = model.predict(X_test_)
+# Plotting wrong predicted images
+y = y.T 
+model = fullyConnectedNet(X, y, epochs = 9)
+results = model.predict(X)
 y_pred = np.zeros([results.shape[0]])
 for i in xrange(results.shape[0]):
 	y_pred[i] = np.argmax(results[i,:]).astype(int)
+	if y_pred[i] != y[i]:
+		plotImage(X_original, i, label = np.array_str(results[i]))
+
+
+
+
+# First CovNet:
+# Train Accuracy = 99.6%
+# Test Accuracy = 98.8%
+# X_ = X.reshape(X.shape[0], 28, 28, 1)
+# X_test_ = X_test.reshape(X_test.shape[0], 28, 28, 1)
+# model = covNet(X_, y, batch_size = 128, epochs = 12)
+# results = model.predict(X_test_)
+# y_pred = np.zeros([results.shape[0]])
+# for i in xrange(results.shape[0]):
+# 	y_pred[i] = np.argmax(results[i,:]).astype(int)
 
 
 # Submission:
-saveToCSV(y_pred.astype(int), "CovNet")
+saveToCSV(y_pred.astype(int), "FCN_PCA")
